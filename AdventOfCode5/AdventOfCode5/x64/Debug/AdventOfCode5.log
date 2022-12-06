@@ -1,7 +1,0 @@
-﻿  Source.cpp
-C:\Users\grayw\source\repos\AdventOfCode5\AdventOfCode5\Source.cpp(34,65): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\grayw\source\repos\AdventOfCode5\AdventOfCode5\Source.cpp(51,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\grayw\source\repos\AdventOfCode5\AdventOfCode5\Source.cpp(52,32): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\grayw\source\repos\AdventOfCode5\AdventOfCode5\Source.cpp(93,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-C:\Users\grayw\source\repos\AdventOfCode5\AdventOfCode5\Source.cpp(126,45): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  AdventOfCode5.vcxproj -> C:\Users\grayw\source\repos\AdventOfCode5\x64\Debug\AdventOfCode5.exe
