@@ -5,6 +5,7 @@
 #include <set>
 #include<chrono>
 using namespace std;
+//Commented out is initial solution, below is improved solution
 /*
 int checkUnique(vector<char> code) {
 	int l = code.size();
