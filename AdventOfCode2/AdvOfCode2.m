@@ -1,0 +1,69 @@
+A=fileread("AOC2.txt");
+B=regexp(A,'\n','split');
+running1=0;
+running2=0;
+[m,n]=size(B);
+for i = 1:n
+	roundScore=0
+	x=B{i}(1);
+	y=B{i}(3);
+	if(y=='X')
+		roundScore=roundScore+1;
+		if(x=='A')
+			roundScore=roundScore+3;
+		elseif(x=='C')
+			roundScore=roundScore+6;
+		end
+	elseif(y=='Y')
+		roundScore=roundScore+2;
+		if(x=='B')
+			roundScore=roundScore+3;
+		elseif(x=='A')
+			roundScore=roundScore+6;
+		end
+	elseif(y=='Z')
+		roundScore=roundScore+3;
+		if(x=='C')
+			roundScore=roundScore+3;
+		elseif(x=='B')
+			roundScore=roundScore+6;
+		end
+	end
+	running1=running1+roundScore;
+end
+running1
+
+for j = 1:n
+	roundScore=0
+	x=B{j}(1);
+	y=B{j}(3);
+	if(y=='X')
+		if(x=='A')
+			roundScore=roundScore+3;
+		elseif(x=='B')
+			roundScore=roundScore+1;
+		elseif(x=='C')
+			roundScore=roundScore+2;
+		end
+	elseif(y=='Y')
+		roundScore=roundScore+3;
+		if(x=='A')
+			roundScore=roundScore+1;
+		elseif(x=='B')
+			roundScore=roundScore+2;
+		elseif(x=='C')
+			roundScore=roundScore+3;
+		end
+	elseif(y=='Z')
+		roundScore=roundScore+6;
+		if(x=='A')
+			roundScore=roundScore+2;
+		elseif(x=='B')
+			roundScore=roundScore+3;
+		elseif(x=='C')
+			roundScore=roundScore+1;
+		end
+	end
+	running2=running2+roundScore;
+end
+running2
