@@ -1,0 +1,22 @@
+function [out1,out2] = sandFall(x,y,Z)
+    t=1;
+    while(t==1)
+        if(y==size(Z,1))
+            out1=x;
+            out2=y;
+            t=0;
+        elseif(Z(y+1,x)==0)
+            y=y+1;
+        elseif(Z(y+1,x-1)==0)
+            y=y+1;
+            x=x-1;
+        elseif(Z(y+1,x+1)==0)
+            y=y+1;
+            x=x+1;
+        else
+            out1=x;
+            out2=y;
+            t=0;
+        end
+    end
+end
