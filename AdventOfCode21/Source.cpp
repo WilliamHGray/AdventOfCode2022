@@ -6,6 +6,15 @@
 #include <queue>
 using namespace std;
 
+bool isPositive(int64_t num)
+{
+	if(num>0)
+	{
+		return true;
+	}
+	return false;
+}
+
 int64_t useOp(char op, string Monkey1, string Monkey2, map<string, int64_t>monkeys)
 {
 	int64_t num1 = monkeys[Monkey1], num2 = monkeys[Monkey2];
@@ -27,7 +36,7 @@ int64_t useOp(char op, string Monkey1, string Monkey2, map<string, int64_t>monke
 	}
 }
 
-bool monkeyIter(map<string,int64_t>monkeys,queue<string>monkeySums)
+bool monkeyIter(map<string, int64_t>monkeys, queue<string>monkeySums)
 {
 	while (monkeySums.size() > 0)
 	{
@@ -81,10 +90,31 @@ int64_t monkeyMaths(map<string, int64_t>monkeys, queue<string>monkeySums)
 			monkeySums.push(currMonkey);
 		}
 	}
-	cout << "monkey 1 = " << monkeys["bsbd"] << endl;
-	cout << "monkey 2 = " << monkeys["fcgj"] << endl;
-	cout << "diff = "<< monkeys["bsbd"]- monkeys["fcgj"] << endl;
+
 	return monkeys["root"];
+}
+
+int64_t getDiff(map<string, int64_t>monkeys, queue<string>monkeySums, int64_t humanNumber)
+{
+	monkeys["humn"] = humanNumber;
+	while (monkeySums.size() > 0)
+	{
+		string currMonkey = monkeySums.front();
+		monkeySums.pop();
+		string currMonkeyName = currMonkey.substr(0, 4);
+		string Monkey1 = currMonkey.substr(6, 4), Monkey2 = currMonkey.substr(13, 4);
+		char op = currMonkey[11];
+		if (monkeys.count(Monkey1) && monkeys.count(Monkey2))
+		{
+			int64_t num = useOp(op, Monkey1, Monkey2, monkeys);
+			monkeys[currMonkeyName] = num;
+		}
+		else
+		{
+			monkeySums.push(currMonkey);
+		}
+	}
+	return monkeys["bsbd"] - monkeys["fcgj"];
 }
 
 int main()
@@ -111,21 +141,47 @@ int main()
 			monkeySums.push(lines[i]);
 		}
 	}
-	
+
 	int64_t rootAns = monkeyMaths(monkeys, monkeySums);
-	cout << "Part 1 answer: " << rootAns << endl;
-	monkeys["humn"] += 3759566888160;
-	int startNum = monkeys["humn"];
-	while (!monkeyIter(monkeys, monkeySums))
+	cout << "Part 1 answer: " << rootAns << endl << endl;
+	int64_t startNum = monkeys["humn"];
+	int64_t leftSide = startNum, rightSide, shift;
+	int64_t startDiff = getDiff(monkeys, monkeySums, startNum);
+	int64_t offDiff = getDiff(monkeys, monkeySums, startNum + 1000);
+	if (startDiff > offDiff)
 	{
-		monkeys["humn"]++;
-		startNum++;
-		if (startNum % 100)
-		{
-			cout << startNum << endl;
-		}
+		shift = 10;
 	}
-	
-	cout << monkeys["humn"];
-	
+	else
+	{
+		shift = -10;
+	}
+	rightSide = shift*startNum;
+	bool startSign = isPositive(startDiff);
+	bool rightSign = isPositive(getDiff(monkeys, monkeySums, rightSide));
+	while (rightSign==startSign)
+	{
+		rightSide *= shift;
+		rightSign = isPositive(getDiff(monkeys, monkeySums, rightSide));
+	}
+	int64_t midPoint = (rightSide + leftSide) / 2;
+	int64_t midDiff = getDiff(monkeys, monkeySums, midPoint);
+	while (midDiff != 0)
+	{
+		cout << "midDiff = " << midDiff << ", midPoint = " << midPoint << endl;
+		bool q = isPositive(midDiff);
+		if (q == rightSign)
+		{
+			rightSide = midPoint;
+		}
+		else
+		{
+			leftSide = midPoint;
+		}
+		midPoint = (rightSide + leftSide) / 2;
+		midDiff = getDiff(monkeys, monkeySums, midPoint);
+	}
+	cout << endl;
+	cout << "Part 2 answer: " << midPoint;
+
 }
